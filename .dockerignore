@@ -1,0 +1,15 @@
+# git
+.git
+.gitignore
+
+# compiled output
+/dist
+/node_modules
+
+# OS
+.DS_Store
+
+# config files
+*.md
+.prettierrc
+.eslintrc.js
