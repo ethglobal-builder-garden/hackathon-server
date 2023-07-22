@@ -16,8 +16,8 @@ export class UserController {
     return this.userService.createUser(newUser);
   }
 
-  @Get('/poap/:address')
-  async getPoap(@Param('address') walletAddress: string) {
-    return this.userService.getPoap(walletAddress);
+  @Get('/airstack/:address')
+  async getAirstackData(@Param('address') walletAddress: string) {
+    return this.userService.getAirstackData(walletAddress);
   }
 }

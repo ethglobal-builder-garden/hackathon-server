@@ -48,6 +48,12 @@ export class User {
 
   @Prop({ required: false })
   pow: Pow;
+
+  @Prop({ required: false })
+  pubkey: string;
+
+  @Prop({ required: false })
+  privkey: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

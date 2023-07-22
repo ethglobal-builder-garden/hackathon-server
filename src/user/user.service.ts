@@ -28,11 +28,11 @@ export class UserService implements OnModuleInit {
   ) {
     this.alchemy = new Alchemy({
       apiKey: this.config.get('ALCHEMY_API_KEY'),
-      network: Network.MATIC_MUMBAI,
+      network: Network.ETH_GOERLI,
     });
 
     this.jsonRpcProvider = new ethers.providers.JsonRpcProvider(
-      `https://polygon-mumbai.g.alchemy.com/v2/${this.config.get(
+      `https://eth-goerli.g.alchemy.com/v2/${this.config.get(
         'ALCHEMY_API_KEY',
       )}`,
     );
@@ -97,26 +97,50 @@ export class UserService implements OnModuleInit {
     return user;
   }
 
-  async getPoap(walletAddress: string) {
+  async getAirstackData(walletAddress: string) {
     const res = await this.httpService
       .post('https://api.airstack.xyz/gql', {
-        query:
-          'query GetAllPOAPs($address: [Identity!]) { Poaps(input: {filter: {owner: {_in: $address}}, blockchain: ALL, limit: 10}) { Poap { poapEvent { eventName contentValue { image { extraSmall large medium original small } } } } } }',
+        query: `query GetLensAndPopas($address: [Identity!]) {
+              Socials(
+                input: {filter: {identity: {_in: $address}, dappSlug: {_eq: lens_polygon}}, blockchain: ethereum}
+              ) {
+                Social {
+                  profileName
+                  dappName
+                }
+              }
+              Poaps(input: {filter: {owner: {_in: $address}}, blockchain: ALL, limit: 10}) {
+                Poap {
+                  poapEvent {
+                    eventName
+                    contentValue {
+                      image {
+                        original
+                      }
+                    }
+                  }
+                }
+              }
+            }`,
         variables: {
           address: [walletAddress],
         },
       })
-      .then((res) => res?.data?.data?.Poaps?.Poap);
+      .then((res) => res?.data?.data);
+
     if (res) {
-      const poaps = res.map((poap) => {
+      const poapData = res.Poaps.Poap;
+      const lensData = res.Socials.Social;
+      const poaps = poapData.map((poap) => {
         return {
           eventName: poap.poapEvent.eventName,
           image: poap.poapEvent.contentValue.image,
         };
       });
-      return poaps;
+
+      return { lens: lensData[0].profileName, poaps };
     } else {
-      return [];
+      return {};
     }
   }
 }

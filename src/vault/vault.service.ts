@@ -33,11 +33,11 @@ export class VaultService implements OnModuleInit {
   ) {
     this.alchemy = new Alchemy({
       apiKey: this.config.get('ALCHEMY_API_KEY'),
-      network: Network.MATIC_MUMBAI,
+      network: Network.ETH_GOERLI,
     });
 
     this.jsonRpcProvider = new ethers.providers.JsonRpcProvider(
-      `https://polygon-mumbai.g.alchemy.com/v2/${this.config.get(
+      `https://eth-goerli.g.alchemy.com/v2/${this.config.get(
         'ALCHEMY_API_KEY',
       )}`,
     );
