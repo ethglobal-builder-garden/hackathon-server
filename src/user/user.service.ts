@@ -28,11 +28,11 @@ export class UserService implements OnModuleInit {
   ) {
     this.alchemy = new Alchemy({
       apiKey: this.config.get('ALCHEMY_API_KEY'),
-      network: Network.ETH_GOERLI,
+      network: Network.ETH_SEPOLIA,
     });
 
     this.jsonRpcProvider = new ethers.providers.JsonRpcProvider(
-      `https://eth-goerli.g.alchemy.com/v2/${this.config.get(
+      `https://eth-sepolia.g.alchemy.com/v2/${this.config.get(
         'ALCHEMY_API_KEY',
       )}`,
     );
