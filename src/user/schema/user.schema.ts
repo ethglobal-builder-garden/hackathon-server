@@ -43,7 +43,7 @@ export class User {
   @Prop({ required: true })
   userType: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   social: Social;
 
   @Prop({ required: false })
