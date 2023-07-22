@@ -13,7 +13,11 @@ export class UserController {
 
   @Post('')
   async createUser(@Body() newUser: User) {
-    console.log(newUser);
     return this.userService.createUser(newUser);
+  }
+
+  @Get('/poap/:address')
+  async getPoap(@Param('address') walletAddress: string) {
+    return this.userService.getPoap(walletAddress);
   }
 }

@@ -98,7 +98,10 @@ export class VaultService implements OnModuleInit {
           await this.newFundAdded(logs[j]);
         }
 
-        console.log('opening ws for funded for each prev vault');
+        console.log(
+          'opening ws for funded for each prev vault:',
+          vaultContract.address,
+        );
         await this.alchemy.ws.on(
           vaultContract.filters.Funded(),
           async (log) => {

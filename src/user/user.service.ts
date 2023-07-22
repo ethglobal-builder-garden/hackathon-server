@@ -96,4 +96,27 @@ export class UserService implements OnModuleInit {
     const user = await this.userModel.findOne({ walletAddress }).lean();
     return user;
   }
+
+  async getPoap(walletAddress: string) {
+    const res = await this.httpService
+      .post('https://api.airstack.xyz/gql', {
+        query:
+          'query GetAllPOAPs($address: [Identity!]) { Poaps(input: {filter: {owner: {_in: $address}}, blockchain: ALL, limit: 10}) { Poap { poapEvent { eventName contentValue { image { extraSmall large medium original small } } } } } }',
+        variables: {
+          address: [walletAddress],
+        },
+      })
+      .then((res) => res?.data?.data?.Poaps?.Poap);
+    if (res) {
+      const poaps = res.map((poap) => {
+        return {
+          eventName: poap.poapEvent.eventName,
+          image: poap.poapEvent.contentValue.image,
+        };
+      });
+      return poaps;
+    } else {
+      return [];
+    }
+  }
 }
