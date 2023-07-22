@@ -10,4 +10,14 @@ export class VaultController {
   async createUser(@Body() newVault: Vault) {
     return this.vaultService.createVault(newVault);
   }
+
+  @Get('/all')
+  async getAllVaults() {
+    return this.vaultService.getAllVaults();
+  }
+
+  @Get('/one/:id')
+  async getOneVault(@Param('id') id: string) {
+    return this.vaultService.getOneVault(id);
+  }
 }

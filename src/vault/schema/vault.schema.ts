@@ -15,7 +15,7 @@ export class Vault {
   vaultContract: string;
 
   @Prop({ required: true })
-  amount: string;
+  totalAmount: string;
 
   @Prop({ required: true })
   deadline: number;
@@ -25,6 +25,12 @@ export class Vault {
 
   @Prop({ required: true })
   story: string;
+
+  @Prop({ required: true })
+  backers: string[];
+
+  @Prop({ required: true })
+  currentAmount: string;
 }
 
 export const VaultSchema = SchemaFactory.createForClass(Vault);

@@ -6,7 +6,7 @@ import { User } from './schema/user.schema';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('')
+  @Get('/one/:address')
   async getUser(@Param('address') walletAddress: string) {
     return this.userService.getUserByWalletAddress(walletAddress);
   }

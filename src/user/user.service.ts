@@ -58,15 +58,17 @@ export class UserService implements OnModuleInit {
       0,
       currentBlockNumber,
     );
+
     await Promise.all(logs.map((log) => this.newUserSignUp(log)));
 
+    console.log('BuilderGarden Signing ws opening');
     await this.alchemy.ws.on(
       this.builderGardenContract.filters.SignUp(),
       async (log) => {
         await this.newUserSignUp(log);
       },
     );
-    console.log('Event Service initiated');
+    console.log('User Event Service initiated');
   }
 
   async newUserSignUp(log) {

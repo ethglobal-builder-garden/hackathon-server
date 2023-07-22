@@ -35,12 +35,18 @@ export class User {
   tokenId: number;
 
   @Prop({ required: true })
+  role: string;
+
+  @Prop({ required: true })
+  interest: string[];
+
+  @Prop({ required: true })
   userType: string;
 
   @Prop({ required: true })
   social: Social;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   pow: Pow;
 }
 
